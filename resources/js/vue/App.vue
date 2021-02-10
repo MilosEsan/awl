@@ -16,12 +16,14 @@
                     </li>
                 </ul>
             </div>
-            <img
-                width="42"
-                height="32"
-                class="rounded-circle mr-3"
-                :src="profileAvatar"
-            />
+                <div class="profile-image mr-3">
+                    <img
+                       width="42"
+                       height="32"
+                       class="rounded-circle"
+                       :src="profileAvatar"
+                      />
+                </div>
         </nav>
         <nav class="bullets" aria-label="...">
             <ul class="pagination">
@@ -29,19 +31,19 @@
                     pagination()
                 }}
                 <li class="page-item">
-                    <a class="page-link" href="#" v-bind:class="{ activeBorder: firstNav }"></a>
+                    <div class="page-link" href="#" v-bind:class="{ activeBorder: firstNav }"></div>
                     <label class="mt1" v-bind:class="{ active: firstNav }">
                         STEP 1</label
                     >
                 </li>
                 <li class="page-item">
-                    <a class="page-link" href="#" v-bind:class="{ activeBorder: secNav }"></a>
+                    <div class="page-link" href="#" v-bind:class="{ activeBorder: secNav }"></div>
                     <label class="mt1" v-bind:class="{ active: secNav }">
                         STEP 2
                     </label>
                 </li>
                 <li class="page-item">
-                    <a class="page-link" href="#" v-bind:class="{ activeBorder: thirdNav }"></a>
+                    <div class="page-link" href="#" v-bind:class="{ activeBorder: thirdNav }"></div>
                     <label
                         class="mt1 position-absolute"
                         v-bind:class="{ active: thirdNav }"
@@ -108,7 +110,6 @@ export default {
       border: 2px solid #000000 !important;
     }
 
-    /* Customize the label (the container) */
     .check-wrapper {
         position: relative;
         margin: 0 0 1em 1em;
@@ -120,7 +121,6 @@ export default {
         user-select: none;
     }
 
-    /* Hide the browser's default checkbox */
     .check-wrapper input {
         display: none;
         position: absolute;
@@ -130,7 +130,6 @@ export default {
         width: 0;
     }
 
-    /* Create a custom checkbox */
     .checkmark {
         position: absolute;
         top: 0;
@@ -140,29 +139,24 @@ export default {
         border: 2px solid #000000;
     }
 
-    /* On mouse-over, add a grey background color */
     .check-wrapper:hover input ~ .checkmark {
         background-color: #ccc;
     }
 
-    /* When the checkbox is checked, add a blue background */
     .check-wrapper input:checked ~ .checkmark {
         background-color: #948000;
     }
 
-    /* Create the checkmark/indicator (hidden when not checked) */
     .checkmark:after {
         content: "";
         position: absolute;
         display: none;
     }
 
-    /* Show the checkmark when checked */
     .check-wrapper input:checked ~ .checkmark:after {
         display: block;
     }
 
-    /* Style the checkmark/indicator */
     .check-wrapper .checkmark:after {
         left: 9px;
         top: 5px;
@@ -175,10 +169,6 @@ export default {
         transform: rotate(45deg);
     }
 
-    .comming-soon {
-        margin-left: 40px;
-    }
-
     button {
         background-color: #948000;
         color: #ffffff;
@@ -186,12 +176,10 @@ export default {
         border-radius: 5%;
         padding: 0.5em 1em;
     }
+}
 
-    select {
-        color: #f3f2f2 !important;
-        background-color: #94a3a8 !important;
-        /* max-width: 3rem; */
-    }
+.profile-image {
+    flex: 0.2;
 }
 
 .logo {
@@ -216,7 +204,7 @@ export default {
     .pagination {
         display: flex;
         justify-content: space-between;
-        border-top: 2px solid black;
+        border-top: 2px solid #000000;
         margin-top: 15px;
     }
 }
@@ -240,6 +228,11 @@ export default {
     line-height: 475px;
     text-align: center;
     border-radius: 50%;
+
+    &:hover {
+        background-color: #ffffff !important;
+        border: 2px solid #878787;
+    }
 }
 
 /* .page-link:visited {
@@ -290,6 +283,7 @@ export default {
     .page-link {
         height: 17px;
         width: 5px;
+        margin-top: -9px;
     }
 
     .page-item label {

@@ -6,17 +6,17 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     state: {
         //STEP 1
-        business: null,
+        business: "",
         logo: null,
         icon: null,
         color1: "#9c0404",
         color2: "#00727c",
         color3: "#000e0d",
-        font: null,
+        font: "Helvetica",
         appUrl: null,
 
         //STEP 2
-        amenity: null,
+        amenity: "DISABLED",
 
         adminRolles: {
             tsa: null,
@@ -40,11 +40,12 @@ export default new Vuex.Store({
     mutations: {
 
         setBusiness(state, value) {
-            if (value.length > 4 && value.length < 13) {
+            if (value.length >= 4 && value.length <= 13) {
                 state.business = value
 
                 if (!/^[a-zA-Z &_.]+$/.test(value)) {
-                    state.business = false;
+                    // for better UX then state.business = false
+                    state.business = "    ";
                 }
             } else {
                 state.business = "";
@@ -72,7 +73,7 @@ export default new Vuex.Store({
             state.appUrl = value
         },
         setAmenity(state, value) {
-            if (value == true) { state.amenity = "ENABLED" } else { state.amenity = "DISABLED" }
+            state.amenity = value
         },
         setTSA(state, value) {
             state.adminRolles.tsa = value

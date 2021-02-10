@@ -30,7 +30,7 @@
                  <input type="checkbox" name="verify" id="verify" v-model="verify">
                <span class="checkmark"></span>
           </label>
-            <small v-if="this.verifyCheck == true" class="text-danger position-absolute mt-5">
+            <small v-if="this.verifyCheck == true" class="text-danger position-absolute mt-4">
             ALERT! This is required.
             </small>
        </div>

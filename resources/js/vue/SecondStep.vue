@@ -10,9 +10,14 @@
         </label>
         <div class="col-md-2">
           <label class="check-wrapper">
-         <input type="checkbox" value="Amenity" id="amenity" name="amenity" v-model="amenity">
-        <span class="checkmark"></span>
+         <input true-value="ENABLED" false-value="DISABLED" 
+         type="checkbox" id="amenity" name="amenity" 
+         v-bind:value="'ENABLED'" v-model="amenity">
+            <span class="checkmark"></span>
           </label>
+          <small v-if="this.$store.state.amenity == 'ENABLED'" class="text-warning position-absolute mt-4">
+            ENABLED (optional)
+            </small>
         </div>
       </div>
       <div class="row form-group mb-5">
@@ -77,7 +82,7 @@
             How often whill the custommer be billed for the white label: 
         </label>
         </div>
-        <div  class="col-md-6">
+        <div  class="col-md-3">
        <select name="bill" id="bill" v-model="bill"
        class="form-select form-select-sm" 
        aria-label="Default select example" required>
@@ -105,14 +110,8 @@
 </template>
 
 <script>
-import buttons from "./Buttons.vue"
-
 
 export default {
-
-components: {
-            Buttons: buttons
-        },
 
   computed: {
             amenity: {
@@ -195,15 +194,6 @@ components: {
           periods: ["MONTHLY", "QUARTERLY", "YEARLY"],
           validInput_1: false,
           validInput_2: false,
-          post: {
-            amenity: null,
-            adminRolles: [],
-            nfcFunctionality: [],
-            amount: null,
-            bill: null
-          },
-
-          showModel: false    
       }
   },
 
@@ -233,34 +223,18 @@ components: {
      else {
       this.validInput_2 = true;
     }
-    if (this.$store.state.bill == null){
-        this.$router.push('/second-step/')
-        }
+   
+   if (this.$store.state.bill == null) {
+       this.$router.replace('/second-step/').catch(err => err)
+    }
 
-    else if (this.$store.state.price == null) {
-        this.$router.push('/second-step/')
+   if (this.$store.state.price == null ||
+       this.$store.state.price == "") {
+        this.$router.replace('/second-step/').catch(err => err)
       }
-  },
+
+    },
   
-    submit() {
-
- fetch("/white-label-2", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded"
-            },
-            body: JSON.stringify(
-                "    CHECKED BOXES:     " +
-              this.post.checkedOps + '' +
-                "    AMOUNT:     " +
-              this.post.amount     + '' +
-              "BILLING:     " +
-              this.post.bill   /*  + '' +  */
-            )
-        })
-        .then(r => r.text())
-        .then(t => alert(t));
-      }
   },
 };
 </script>
@@ -278,5 +252,9 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 }
+
+ .comming-soon {
+        margin-left: 40px;
+    }
 
 </style>

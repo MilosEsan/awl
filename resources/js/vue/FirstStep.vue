@@ -7,7 +7,8 @@
       <div class="row form-group mb-5">
         <label for="email" class="col-md-2">       
             Business Name:      
-        </label>  <div class="col-md-4">
+        </label>  
+        <div class="col-md-4">
          <input type="text" 
          name="business" 
          id="business" 
@@ -17,7 +18,7 @@
          required>
          <small v-if="this.validateLength == true" class="text-danger"> Minimum length is 4 and maximum length is 13 characters!</small>
          <small v-if="this.validInput == true" class="text-danger"> 
-           ALERT! Only letters, spaces, numbers and "&", "_" and "." symbols are allowed.</small>
+           ALERT! Only letters, spaces, "&", "_" and "." symbols are allowed.</small>
            <small v-if="this.checkName == true" class="text-danger">Name unavailable!</small>
          
         </div>
@@ -78,7 +79,7 @@
             Primary App font: 
         </label>
         </div>
-        <div  class="col-md-4">
+        <div  class="col-md-3">
        <select name="font" 
        required
        v-model="font"  
@@ -132,7 +133,7 @@ computed: {
                   }
 
                    else if (!/^[a-zA-Z &_.]+$/.test(this.$store.state.business) ||
-                   this.$store.state.business == false) {
+                   this.$store.state.business == "    ") {
                     this.validInput = true
                     this.validateLength = false
                   } 
@@ -207,18 +208,7 @@ computed: {
           title:'Client Information',
           validateLength: false,
           validInput: false,
-          checkName: false,
           fonts: null,
-          post: {
-            selectedFont: null,
-            bussines: null,
-            url: null,
-            logo: null,
-            icon: null,
-            color1: "#9c0404",
-            color2: "#00727c",
-            color3: "#000e0d",
-          }
       }
   },
 
@@ -227,10 +217,15 @@ computed: {
   validateBusiness() {},
 
   navigateNext() {
-    if (this.$store.state.business &&
+    if (this.$store.state.business !== "    " &&
+        this.$store.state.business !== "" &&
         this.$store.state.business !== null) {
             this.$router.push('/second-step/')
     } 
+    else if (this.$store.state.appUrl === null ||
+    this.$store.state.appUrl == "") {
+      this.$router.replace("/first-step/")
+    }
   },
 
   processFile1(event) {
@@ -238,41 +233,14 @@ computed: {
   },
 
   processFile2(event) {
-    this.store.state.icon = event.target.files[0]
-  },
-
-    submit() {
-
- fetch("/white-label-1", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded"
-            },
-            body: JSON.stringify(
-                "    BUSSINES NAME:     " +
-              this.post.bussines + '' +
-                "    APP URL:     " +
-              this.post.url     + '' +
-              "LOGO:     "  +
-              this.post.logo     + '' +
-              "COLOR 1:     "  +
-              this.post.color1      + '' + 
-              "COLOR 2:     "  +
-              this.post.color2      + '' + 
-              "COLOR 3:     "  +
-              this.post.color3     /*  + '' +  */
-            )
-        })
-        .then(r => r.text())
-        .then(t => alert(t));
-      }
+    this.$store.state.icon = event.target.files[0]
+      },
   },
 
   mounted () {
     axios
       .get('https://www.googleapis.com/webfonts/v1/webfonts?key=AIzaSyDmqDd0IHlDwBvULs63knzYQSLL3EloM1c')
       .then(response => (this.fonts = response.data.items))
-
   }
 };
 
@@ -312,6 +280,12 @@ input[type="url"], input[type="text"] {
   border-radius: 0.3rem;
   cursor: pointer;
 }
+
+ select {
+        color: #f3f2f2;
+        background-color: #94a3a8;
+        /* max-width: 3rem; */
+    }
 
 
 </style>
